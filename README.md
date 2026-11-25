@@ -3,7 +3,7 @@
 [![tests](https://github.com/fxbravo/sam-and-dario/actions/workflows/tests.yml/badge.svg)](https://github.com/fxbravo/sam-and-dario/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)
-![Platform: macOS](https://img.shields.io/badge/platform-macOS-lightgrey.svg)
+![Platform: macOS | Linux | Windows (WSL)](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows%20%28WSL%29-lightgrey.svg)
 
 **English** · [Français](README.fr.md)
 
@@ -70,7 +70,7 @@ sequenceDiagram
 
 ## Installation
 
-> **On Windows, use WSL.** Sam & Dario relies on tmux and on Unix features that Windows lacks. Install [WSL](https://learn.microsoft.com/windows/wsl/install) (Windows Subsystem for Linux), open its terminal, and follow the steps below inside WSL, as on Linux: tmux, Claude Code, Codex CLI, pipx and Sam & Dario all go there. Linux and WSL have not been tested yet.
+> **On Windows, use WSL.** Sam & Dario relies on tmux and on Unix features that Windows lacks. Install [WSL](https://learn.microsoft.com/windows/wsl/install) (Windows Subsystem for Linux), open its terminal, and follow the steps below inside WSL, as on Linux: tmux, Claude Code, Codex CLI, pipx and Sam & Dario all go there.
 
 1. **Install the prerequisites**: [tmux](https://github.com/tmux/tmux/wiki/Installing), [Claude Code](https://code.claude.com/docs/en/setup), [Codex CLI](https://developers.openai.com/codex/cli/) and [pipx](https://pipx.pypa.io/). Sign in to both assistants with your own accounts. On a Mac with Homebrew:
 
@@ -87,7 +87,7 @@ sequenceDiagram
    pipx ensurepath
    ```
 
-   Then close and reopen the terminal, so that pipx's folder is in your PATH. Install Claude Code and Codex CLI inside WSL too, following their guides for Linux. Ubuntu 24.04 ships tmux 3.4, with which the title of an exported agreement cannot be edited (see [Saving an agreement](#saving-an-agreement)). Linux and WSL have not been tested yet.
+   Then close and reopen the terminal, so that pipx's folder is in your PATH. Install Claude Code and Codex CLI inside WSL too, following their guides for Linux. Ubuntu 24.04 ships tmux 3.4, with which the title of an exported agreement cannot be edited (see [Saving an agreement](#saving-an-agreement)).
 
 2. **Install Sam & Dario.** pipx gives it its own Python environment and puts the `samdario` command in your PATH. Sam & Dario has no dependencies beyond the Python standard library (3.9 or later).
 
@@ -277,8 +277,8 @@ Sam & Dario moves messages between Claude and Codex. It does not coordinate thei
 - **Both assistants editing the same files at the same time.** Sam & Dario puts no lock on the code. If both write code in parallel, one may overwrite the other's work. Give them distinct roles, for example one writes the code and the other reviews it.
 - **Two Sam & Dario sessions on the same project.** Each has its own log and ignores the other. Four assistants may then touch the same files.
 - **Git.** Sam & Dario manages neither branches nor commits. If both commit on their own, it is up to you to sort it out.
-- **A new version of Claude Code or Codex.** Sam & Dario recognizes the format of their hooks and the text with which Claude Code delivers a relay. Recent tests used Claude Code 2.1.330, Codex 0.171.0 and tmux 3.8, on macOS. If an update changes these formats, the status bar may show « suivi perdu » (tracking lost) or an uncertain delivery.
-- **Windows.** Sam & Dario does not run on Windows itself: it needs `tmux` and Unix-only Python modules. Use WSL instead (see [Installation](#installation)). Linux and WSL have not been tested yet.
+- **A new version of Claude Code or Codex.** Sam & Dario recognizes the format of their hooks and the text with which Claude Code delivers a relay. Recent tests used Claude Code 2.1.330, Codex 0.171.0 and tmux 3.8, on macOS. Sam & Dario has also been tried on Linux and in WSL. If an update changes these formats, the status bar may show « suivi perdu » (tracking lost) or an uncertain delivery.
+- **Windows.** Sam & Dario does not run on Windows itself: it needs `tmux` and Unix-only Python modules. Use WSL instead (see [Installation](#installation)).
 
 **What stops the exchange until you act**
 

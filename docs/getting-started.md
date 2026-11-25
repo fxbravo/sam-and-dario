@@ -28,7 +28,7 @@ codex --version
 codex queue --help
 ```
 
-The last command should print the help for Codex's message queue. Tests were run on macOS with tmux 3.8, Claude Code 2.1.330 and Codex CLI 0.171.0.
+The last command should print the help for Codex's message queue. Tests were run on macOS with tmux 3.8, Claude Code 2.1.330 and Codex CLI 0.171.0. Sam & Dario has also been tried on Linux and in WSL.
 
 ## Launching a sample project
 

@@ -2,6 +2,12 @@
 
 All notable changes to Sam & Dario are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [semantic versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- Linux and Windows (WSL) are confirmed to work: the README, the guides and the platform badge say so.
+
 ## [0.1.0] - 2026-11-25
 
 First public release.

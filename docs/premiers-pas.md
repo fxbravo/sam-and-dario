@@ -26,7 +26,7 @@ codex --version
 codex queue --help
 ```
 
-La dernière commande doit afficher l’aide de la mise en file de Codex. Les essais ont été faits sur macOS, avec tmux 3.8, Claude Code 2.1.330 et Codex CLI 0.171.0.
+La dernière commande doit afficher l’aide de la mise en file de Codex. Les essais ont été faits sur macOS, avec tmux 3.8, Claude Code 2.1.330 et Codex CLI 0.171.0. Sam & Dario a aussi été essayé sous Linux et dans WSL.
 
 ## Lancer un projet d’essai
 

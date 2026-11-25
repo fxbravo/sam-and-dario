@@ -3,7 +3,7 @@
 [![tests](https://github.com/fxbravo/sam-and-dario/actions/workflows/tests.yml/badge.svg)](https://github.com/fxbravo/sam-and-dario/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)
-![Platform: macOS](https://img.shields.io/badge/platform-macOS-lightgrey.svg)
+![Platform: macOS | Linux | Windows (WSL)](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows%20%28WSL%29-lightgrey.svg)
 
 [English](README.md) · **Français**
 
@@ -68,7 +68,7 @@ sequenceDiagram
 
 ## Installation
 
-> **Sous Windows, utilise WSL.** Sam & Dario s’appuie sur tmux et sur des fonctions Unix que Windows n’a pas. Installe [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux), ouvre son terminal, et suis les étapes ci-dessous à l’intérieur de WSL, comme sous Linux : tmux, Claude Code, Codex CLI, pipx et Sam & Dario s’y installent tous. Linux et WSL n’ont pas encore été testés.
+> **Sous Windows, utilise WSL.** Sam & Dario s’appuie sur tmux et sur des fonctions Unix que Windows n’a pas. Installe [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux), ouvre son terminal, et suis les étapes ci-dessous à l’intérieur de WSL, comme sous Linux : tmux, Claude Code, Codex CLI, pipx et Sam & Dario s’y installent tous.
 
 1. **Installe les prérequis** : [tmux](https://github.com/tmux/tmux/wiki/Installing), [Claude Code](https://code.claude.com/docs/en/setup), [Codex CLI](https://developers.openai.com/codex/cli/) et [pipx](https://pipx.pypa.io/). Connecte les deux assistants avec tes propres comptes. Sur un Mac avec Homebrew :
 
@@ -85,7 +85,7 @@ sequenceDiagram
    pipx ensurepath
    ```
 
-   Ferme ensuite le terminal et rouvre-le, pour que le dossier de pipx soit dans ton PATH. Installe aussi Claude Code et Codex CLI à l’intérieur de WSL, en suivant leurs guides pour Linux. Ubuntu 24.04 fournit tmux 3.4, avec lequel le titre d’un accord exporté n’est pas modifiable (voir [Enregistrer un accord](#enregistrer-un-accord)). Linux et WSL n’ont pas encore été testés.
+   Ferme ensuite le terminal et rouvre-le, pour que le dossier de pipx soit dans ton PATH. Installe aussi Claude Code et Codex CLI à l’intérieur de WSL, en suivant leurs guides pour Linux. Ubuntu 24.04 fournit tmux 3.4, avec lequel le titre d’un accord exporté n’est pas modifiable (voir [Enregistrer un accord](#enregistrer-un-accord)).
 
 2. **Installe Sam & Dario.** pipx lui donne son propre environnement Python et place la commande `samdario` dans ton PATH. Sam & Dario ne dépend de rien d’autre que de la bibliothèque standard de Python (3.9 ou ultérieur).
 
@@ -275,8 +275,8 @@ Sam & Dario fait circuler les messages entre Claude et Codex. Il ne coordonne pa
 - **Deux assistants qui modifient les mêmes fichiers en même temps.** Sam & Dario ne pose aucun verrou sur le code. Si les deux codent en parallèle, l’un peut écraser le travail de l’autre. Donne-leur des rôles distincts, par exemple l’un code et l’autre relit.
 - **Deux sessions Sam & Dario sur le même projet.** Chacune a sa propre mémoire et ignore l’autre. Quatre assistants peuvent alors toucher aux mêmes fichiers.
 - **Git.** Sam & Dario ne gère ni branches ni commits. Si les deux committent chacun de leur côté, c’est à toi d’arbitrer.
-- **Une nouvelle version de Claude Code ou de Codex.** Sam & Dario reconnaît le format de leurs hooks et le texte par lequel Claude Code remet un relais. Les essais récents ont eu lieu avec Claude Code 2.1.330, Codex 0.171.0 et tmux 3.8, sous macOS. Si une mise à jour change ces formats, la barre peut afficher « suivi perdu » ou une remise incertaine.
-- **Windows.** Sam & Dario ne fonctionne pas directement sous Windows : il lui faut `tmux` et des modules Python propres à Unix. Utilise WSL (voir [Installation](#installation)). Linux et WSL n’ont pas encore été testés.
+- **Une nouvelle version de Claude Code ou de Codex.** Sam & Dario reconnaît le format de leurs hooks et le texte par lequel Claude Code remet un relais. Les essais récents ont eu lieu avec Claude Code 2.1.330, Codex 0.171.0 et tmux 3.8, sous macOS. Sam & Dario a aussi été essayé sous Linux et dans WSL. Si une mise à jour change ces formats, la barre peut afficher « suivi perdu » ou une remise incertaine.
+- **Windows.** Sam & Dario ne fonctionne pas directement sous Windows : il lui faut `tmux` et des modules Python propres à Unix. Utilise WSL (voir [Installation](#installation)).
 
 **Ce qui arrête l’échange jusqu’à ton geste**
 
