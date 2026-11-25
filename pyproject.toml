@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sam-and-dario"
+version = "0.1.0"
+description = "Claude Code et Codex en binôme dans tmux : ils se relaient leurs réponses jusqu'à un accord ou une décision."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "François-Xavier Bravo" }]
+keywords = ["claude-code", "codex", "tmux", "ai-agents", "pair-programming"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Software Development",
+]
+dependencies = []
+
+[project.optional-dependencies]
+images = ["Pillow>=10.1"]
+
+[project.scripts]
+samdario = "samdario.cli:run"
+
+[project.urls]
+Homepage = "https://github.com/fxbravo/sam-and-dario"
+Issues = "https://github.com/fxbravo/sam-and-dario/issues"
+Changelog = "https://github.com/fxbravo/sam-and-dario/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["samdario"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+# Règles fixées : les versions récentes de Ruff en vérifient davantage par défaut, la CI installe la dernière.
+select = ["E4", "E7", "E9", "F"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

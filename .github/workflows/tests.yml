@@ -1,0 +1,38 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    name: ${{ matrix.os }} · Python ${{ matrix.python }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Ubuntu 24.04 fixé : setup-python ne fournit pas CPython 3.9 pour Ubuntu 26.04.
+        os: [ubuntu-24.04, macos-15]
+        python: ["3.9", "3.12", "3.15"]  # 3.15 : le Python que pipx installe par défaut avec Homebrew
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install tmux
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            brew install tmux
+          else
+            sudo apt-get update && sudo apt-get install -y tmux
+          fi
+      - name: Install Sam & Dario
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . "Pillow>=10.1" ruff
+      - name: Ruff
+        run: ruff check .
+      # Les trois tests qui demandent la commande claude sont sautés ici : ils tournent sur une machine
+      # de développement où Claude Code est installé (voir CONTRIBUTING.md).
+      - name: Tests
+        run: python -m unittest discover -s tests -t . -v

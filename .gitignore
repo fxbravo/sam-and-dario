@@ -1,0 +1,17 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+.DS_Store
+/dist/
+.env
+.env.*
+!.env.example
+replies.db
+replies.db-*
+tmux.sock
+brut/
+.venv/
+.venv39/
+*.egg-info/
+build/
