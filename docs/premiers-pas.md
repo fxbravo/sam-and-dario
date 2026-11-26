@@ -6,7 +6,7 @@ Ce guide te fait essayer Sam & Dario sur un projet fictif, en quatre étapes : u
 
 ## Avant de commencer
 
-Sous Windows, fais tout dans [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux), comme sous Linux. La section [Installation](../README.fr.md#installation) donne les commandes pour Ubuntu.
+Sous Windows, fais tout dans [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux), comme sous Linux : lance `wsl --install` dans PowerShell en administrateur, puis ouvre **Ubuntu** depuis le menu Démarrer. Python et pipx s’installent dans Ubuntu, pas sous Windows. La section [Installation](../README.fr.md#installation) donne les commandes pour Ubuntu, et une façon d’installer sans pipx.
 
 Installe tmux, Claude Code, Codex CLI et pipx, connecte les deux assistants avec tes propres comptes, puis installe Sam & Dario. La section [Installation](../README.fr.md#installation) du README donne les commandes ; sur un Mac avec Homebrew :
 

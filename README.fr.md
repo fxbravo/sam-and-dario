@@ -68,7 +68,7 @@ sequenceDiagram
 
 ## Installation
 
-> **Sous Windows, utilise WSL.** Sam & Dario s’appuie sur tmux et sur des fonctions Unix que Windows n’a pas. Installe [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux), ouvre son terminal, et suis les étapes ci-dessous à l’intérieur de WSL, comme sous Linux : tmux, Claude Code, Codex CLI, pipx et Sam & Dario s’y installent tous.
+> **Sous Windows, utilise WSL.** Sam & Dario s’appuie sur tmux et sur des fonctions Unix que Windows n’a pas. N’installe rien sous Windows même, ni Python ni pipx. Ouvre PowerShell en administrateur et lance `wsl --install` : la commande installe [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux) avec Ubuntu. Redémarre si Windows le demande, puis ouvre **Ubuntu** depuis le menu Démarrer. Suis les étapes ci-dessous dans ce terminal Ubuntu, comme sous Linux : tmux, Claude Code, Codex CLI, pipx et Sam & Dario s’y installent tous.
 
 1. **Installe les prérequis** : [tmux](https://github.com/tmux/tmux/wiki/Installing), [Claude Code](https://code.claude.com/docs/en/setup), [Codex CLI](https://developers.openai.com/codex/cli/) et [pipx](https://pipx.pypa.io/). Connecte les deux assistants avec tes propres comptes. Sur un Mac avec Homebrew :
 
@@ -94,7 +94,19 @@ sequenceDiagram
    samdario --version
    ```
 
-**Pour mettre à jour** : ferme les sessions ouvertes, puis lance `pipx install --force git+https://github.com/fxbravo/sam-and-dario.git`.
+**Sans pipx** (si ta distribution Linux n’a pas de paquet `pipx`, par exemple), un environnement virtuel Python fait le même travail. Sous Ubuntu et Debian, lance d’abord `sudo apt install -y git python3-venv`. Puis :
+
+```sh
+python3 -m venv ~/.local/share/samdario
+~/.local/share/samdario/bin/pip install git+https://github.com/fxbravo/sam-and-dario.git
+mkdir -p ~/.local/bin
+ln -sf ~/.local/share/samdario/bin/samdario ~/.local/bin/samdario
+samdario --version
+```
+
+Si le terminal répond que `samdario` est introuvable, ferme-le et rouvre-le : Ubuntu ajoute `~/.local/bin` au PATH quand ce dossier existe. Sur d’autres systèmes, ajoute-le au PATH dans `~/.bashrc`.
+
+**Pour mettre à jour** : ferme les sessions ouvertes, puis lance `pipx install --force git+https://github.com/fxbravo/sam-and-dario.git`. Sans pipx : `~/.local/share/samdario/bin/pip install --force-reinstall git+https://github.com/fxbravo/sam-and-dario.git`.
 
 **Tu avais ajouté un alias `samdario`** avec une version précédente de ce guide ? Retire sa ligne de `~/.zshrc` (ou `~/.bashrc`), puis lance `unalias samdario` dans le terminal ouvert. Sinon, `samdario` continue d’appeler l’ancien script.
 

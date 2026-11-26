@@ -70,7 +70,7 @@ sequenceDiagram
 
 ## Installation
 
-> **On Windows, use WSL.** Sam & Dario relies on tmux and on Unix features that Windows lacks. Install [WSL](https://learn.microsoft.com/windows/wsl/install) (Windows Subsystem for Linux), open its terminal, and follow the steps below inside WSL, as on Linux: tmux, Claude Code, Codex CLI, pipx and Sam & Dario all go there.
+> **On Windows, use WSL.** Sam & Dario relies on tmux and on Unix features that Windows lacks. Install nothing on Windows itself, not even Python or pipx. Open PowerShell as administrator and run `wsl --install`: it installs [WSL](https://learn.microsoft.com/windows/wsl/install) (Windows Subsystem for Linux) with Ubuntu. Restart if Windows asks you to, then open **Ubuntu** from the Start menu. Follow the steps below in that Ubuntu terminal, as on Linux: tmux, Claude Code, Codex CLI, pipx and Sam & Dario all go there.
 
 1. **Install the prerequisites**: [tmux](https://github.com/tmux/tmux/wiki/Installing), [Claude Code](https://code.claude.com/docs/en/setup), [Codex CLI](https://developers.openai.com/codex/cli/) and [pipx](https://pipx.pypa.io/). Sign in to both assistants with your own accounts. On a Mac with Homebrew:
 
@@ -96,7 +96,19 @@ sequenceDiagram
    samdario --version
    ```
 
-**Updating**: close open sessions, then run `pipx install --force git+https://github.com/fxbravo/sam-and-dario.git`.
+**Without pipx** (if your Linux distribution has no `pipx` package, for example), a Python virtual environment does the same job. On Ubuntu and Debian, first run `sudo apt install -y git python3-venv`. Then:
+
+```sh
+python3 -m venv ~/.local/share/samdario
+~/.local/share/samdario/bin/pip install git+https://github.com/fxbravo/sam-and-dario.git
+mkdir -p ~/.local/bin
+ln -sf ~/.local/share/samdario/bin/samdario ~/.local/bin/samdario
+samdario --version
+```
+
+If the terminal answers that `samdario` is not found, close and reopen it: Ubuntu adds `~/.local/bin` to the PATH when that folder exists. On other systems, add it to the PATH in `~/.bashrc`.
+
+**Updating**: close open sessions, then run `pipx install --force git+https://github.com/fxbravo/sam-and-dario.git`. Without pipx: `~/.local/share/samdario/bin/pip install --force-reinstall git+https://github.com/fxbravo/sam-and-dario.git`.
 
 **Had you added a `samdario` alias** with an earlier version of this guide? Remove its line from `~/.zshrc` (or `~/.bashrc`), then run `unalias samdario` in the open terminal. Otherwise `samdario` keeps calling the old script.
 

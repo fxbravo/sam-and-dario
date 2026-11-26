@@ -7,6 +7,7 @@ All notable changes to Sam & Dario are documented here. The format follows [Keep
 ### Changed
 
 - Linux and Windows (WSL) are confirmed to work: the README, the guides and the platform badge say so.
+- The installation guide gives the commands to set up WSL on Windows, and a way to install without pipx, in a Python virtual environment.
 
 ## [0.1.0] - 2026-11-25
 
