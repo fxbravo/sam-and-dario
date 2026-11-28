@@ -4,6 +4,10 @@ All notable changes to Sam & Dario are documented here. The format follows [Keep
 
 ## [Unreleased]
 
+### Added
+
+- A `Dockerfile` to run Sam & Dario, Claude Code and Codex CLI in a container, with only Docker installed. The README explains how to build and launch it, and what the container protects.
+
 ### Changed
 
 - Linux and Windows (WSL) are confirmed to work: the README, the guides and the platform badge say so.

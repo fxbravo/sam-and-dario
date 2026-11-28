@@ -8,6 +8,8 @@ Sam & Dario's interface is in French. Each on-screen label is shown below as it 
 
 ## Before you start
 
+To install nothing but Docker, follow [Running in Docker](../README.md#running-in-docker) instead of the steps below. Then, wherever this guide runs `samdario`, run that section's `docker run` command from the same folder.
+
 On Windows, do everything inside [WSL](https://learn.microsoft.com/windows/wsl/install) (Windows Subsystem for Linux), as on Linux: run `wsl --install` in PowerShell as administrator, then open **Ubuntu** from the Start menu. Python and pipx are installed inside Ubuntu, not on Windows. The [Installation](../README.md#installation) section gives the commands for Ubuntu, and a way to install without pipx.
 
 Install tmux, Claude Code, Codex CLI and pipx, sign in to both assistants with your own accounts, then install Sam & Dario. The [Installation](../README.md#installation) section of the README gives the commands; on a Mac with Homebrew:

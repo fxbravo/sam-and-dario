@@ -68,6 +68,8 @@ sequenceDiagram
 
 ## Installation
 
+Pour n’installer que Docker, voir [Lancer dans Docker](#lancer-dans-docker).
+
 > **Sous Windows, utilise WSL.** Sam & Dario s’appuie sur tmux et sur des fonctions Unix que Windows n’a pas. N’installe rien sous Windows même, ni Python ni pipx. Ouvre PowerShell en administrateur et lance `wsl --install` : la commande installe [WSL](https://learn.microsoft.com/windows/wsl/install) (le sous-système Windows pour Linux) avec Ubuntu. Redémarre si Windows le demande, puis ouvre **Ubuntu** depuis le menu Démarrer. Suis les étapes ci-dessous dans ce terminal Ubuntu, comme sous Linux : tmux, Claude Code, Codex CLI, pipx et Sam & Dario s’y installent tous.
 
 1. **Installe les prérequis** : [tmux](https://github.com/tmux/tmux/wiki/Installing), [Claude Code](https://code.claude.com/docs/en/setup), [Codex CLI](https://developers.openai.com/codex/cli/) et [pipx](https://pipx.pypa.io/). Connecte les deux assistants avec tes propres comptes. Sur un Mac avec Homebrew :
@@ -113,6 +115,42 @@ Si le terminal répond que `samdario` est introuvable, ferme-le et rouvre-le : U
 Rien d’autre n’est à régler à l’avance. Sam & Dario passe ses hooks à Claude Code à chaque lancement, sans toucher à tes réglages. Au premier lancement, Codex te demande une fois de valider les deux hooks de Sam & Dario (voir plus bas). Leur commande ne dépend pas de l’endroit où Sam & Dario est installé ; Codex ne la redemande que si la commande elle-même change, par exemple après une mise à jour qui la modifie.
 
 Pour travailler sur Sam & Dario lui-même, voir [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Lancer dans Docker
+
+Si tu préfères n’installer que [Docker](https://docs.docker.com/get-started/get-docker/), le `Dockerfile` du dépôt construit une image avec tmux 3.6, Claude Code, Codex CLI et Sam & Dario. Il a été essayé avec Docker Desktop sur un Mac à puce Apple. L’image occupe environ 2,5 Go.
+
+Construis l’image une fois, depuis une copie du dépôt :
+
+```sh
+git clone https://github.com/fxbravo/sam-and-dario.git
+cd sam-and-dario
+docker build -t samdario:local --build-arg SAMDARIO_UID="$(id -u)" --build-arg SAMDARIO_GID="$(id -g)" .
+```
+
+Les deux options `--build-arg` donnent au conteneur tes identifiants d’utilisateur et de groupe : les fichiers que les assistants écrivent dans ton projet t’appartiennent.
+
+Lance ensuite Sam & Dario depuis le dossier de ton projet :
+
+```sh
+cd ~/Dev/MonProjet
+docker run --rm -it --init \
+  --mount "type=bind,src=$(pwd -P),dst=/work" \
+  --mount type=volume,src=samdario-monprojet-home,dst=/home/samdario \
+  samdario:local --max 6
+```
+
+- Le dossier du projet est monté dans `/work`, et les assistants peuvent le modifier. Ils le voient sous ce nom : un chemin absolu qu’ils écrivent, comme `/work/index.html`, n’existe pas sur ton ordinateur, alors que les liens relatifs fonctionnent. Les options placées après `samdario:local` vont à Sam & Dario.
+- Le volume, ici `samdario-monprojet-home`, garde les connexions et les réglages des deux assistants d’une session à l’autre. Donne à chaque projet son propre nom de volume.
+
+Au premier lancement, connecte les deux assistants dans leurs panneaux. Le conteneur ne peut pas ouvrir ton navigateur :
+
+- **Claude**, à gauche, affiche un lien. Ouvre-le dans ton navigateur, puis colle dans le panneau le code obtenu.
+- **Codex**, à droite : choisis « Sign in with Device Code » (option 2). La connexion par code d’appareil doit d’abord être activée dans les paramètres de sécurité de ton compte ChatGPT. Ouvre le lien sur ton ordinateur et saisis le code affiché, en distinguant 0 (zéro) et O. Pour le lire plus facilement, agrandis le panneau avec **Ctrl-b**, puis **z**, et refais-le pour revenir.
+
+**Ce que le conteneur protège.** Les assistants ne voient que le projet monté et le volume : ni le reste de tes fichiers, ni tes clés SSH. Le conteneur ne restreint pas l’accès à Internet. Codex y tourne sans son propre bac à sable, qui ne peut pas démarrer dans un conteneur aux permissions ordinaires : dans le conteneur, il peut lancer des commandes et joindre Internet sans demander. Les deux assistants peuvent lire les jetons de connexion gardés dans le volume.
+
+**Pour mettre à jour** : dans ta copie du dépôt, lance `git pull`, puis à nouveau la commande `docker build`. Les volumes gardent tes connexions. L’image fixe Claude Code 2.1.332 et Codex CLI 0.172.0, et coupe la mise à jour automatique de Claude Code. Pour d’autres versions, ajoute `--build-arg CLAUDE_CODE_VERSION=…` ou `--build-arg CODEX_VERSION=…` à `docker build`.
 
 ## Lancer Sam & Dario
 

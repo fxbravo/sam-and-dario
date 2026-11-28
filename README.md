@@ -70,6 +70,8 @@ sequenceDiagram
 
 ## Installation
 
+To install nothing but Docker, see [Running in Docker](#running-in-docker).
+
 > **On Windows, use WSL.** Sam & Dario relies on tmux and on Unix features that Windows lacks. Install nothing on Windows itself, not even Python or pipx. Open PowerShell as administrator and run `wsl --install`: it installs [WSL](https://learn.microsoft.com/windows/wsl/install) (Windows Subsystem for Linux) with Ubuntu. Restart if Windows asks you to, then open **Ubuntu** from the Start menu. Follow the steps below in that Ubuntu terminal, as on Linux: tmux, Claude Code, Codex CLI, pipx and Sam & Dario all go there.
 
 1. **Install the prerequisites**: [tmux](https://github.com/tmux/tmux/wiki/Installing), [Claude Code](https://code.claude.com/docs/en/setup), [Codex CLI](https://developers.openai.com/codex/cli/) and [pipx](https://pipx.pypa.io/). Sign in to both assistants with your own accounts. On a Mac with Homebrew:
@@ -115,6 +117,42 @@ If the terminal answers that `samdario` is not found, close and reopen it: Ubunt
 Nothing else needs setting up beforehand. Sam & Dario passes its hooks to Claude Code at each launch, without touching your settings. On the first launch, Codex asks you once to approve Sam & Dario's two hooks (see below). Their command does not depend on where Sam & Dario is installed; Codex only asks again if the command itself changes, for example after an update that changes it.
 
 To work on Sam & Dario itself, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Running in Docker
+
+If you would rather install nothing but [Docker](https://docs.docker.com/get-started/get-docker/), the repository's `Dockerfile` builds an image with tmux 3.6, Claude Code, Codex CLI and Sam & Dario. It was tried with Docker Desktop on a Mac with Apple silicon. The image takes about 2.5 GB.
+
+Build the image once, from a copy of the repository:
+
+```sh
+git clone https://github.com/fxbravo/sam-and-dario.git
+cd sam-and-dario
+docker build -t samdario:local --build-arg SAMDARIO_UID="$(id -u)" --build-arg SAMDARIO_GID="$(id -g)" .
+```
+
+The two `--build-arg` options give the container your user and group IDs, so that the files the assistants write in your project belong to you.
+
+Then launch Sam & Dario from your project folder:
+
+```sh
+cd ~/Dev/MyProject
+docker run --rm -it --init \
+  --mount "type=bind,src=$(pwd -P),dst=/work" \
+  --mount type=volume,src=samdario-myproject-home,dst=/home/samdario \
+  samdario:local --max 6
+```
+
+- The project folder is mounted at `/work`, and the assistants can edit it. They see it under that name: an absolute path they write, such as `/work/index.html`, does not exist on your computer, while relative links work. Options after `samdario:local` go to Sam & Dario.
+- The volume, here `samdario-myproject-home`, keeps both assistants' sign-ins and settings between sessions. Give each project its own volume name.
+
+On the first launch, sign in to both assistants in their panes. The container cannot open your browser:
+
+- **Claude**, on the left, shows a link. Open it in your browser, then paste the code you get into the pane.
+- **Codex**, on the right: choose « Sign in with Device Code » (option 2). Device code sign-in must first be turned on in the security settings of your ChatGPT account. Open the link on your computer and type the code shown, telling 0 (zero) from O. To read it more easily, zoom in on the pane with **Ctrl-b**, then **z**, and press them again to zoom out.
+
+**What the container protects.** The assistants see only the mounted project and the volume: not the rest of your files, nor your SSH keys. The container does not restrict Internet access. Codex runs without its own sandbox, which cannot start in a container with ordinary permissions: inside the container, it can run commands and reach the Internet without asking. Both assistants can read the sign-in tokens stored in the volume.
+
+**Updating**: in your copy of the repository, run `git pull`, then the `docker build` command again. The volumes keep your sign-ins. The image pins Claude Code 2.1.332 and Codex CLI 0.172.0, and turns off Claude Code's automatic updates. For other versions, add `--build-arg CLAUDE_CODE_VERSION=…` or `--build-arg CODEX_VERSION=…` to `docker build`.
 
 ## Launching Sam & Dario
 

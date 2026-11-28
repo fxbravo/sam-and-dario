@@ -1,0 +1,7 @@
+# La construction n'a besoin que du paquet et des fichiers que pyproject.toml lit.
+*
+!pyproject.toml
+!README.md
+!LICENSE
+!samdario/
+samdario/__pycache__/
